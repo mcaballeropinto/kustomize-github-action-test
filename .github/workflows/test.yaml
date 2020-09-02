@@ -11,12 +11,6 @@ jobs:
         with:
           ref: ${{ github.event.deployment.ref }}
 
-      - name: Setup Kustomize
-        run: |
-          curl -o kustomize --location https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv3.8.2/kustomize_v3.8.2_linux_amd64
-          chmod u+x ./kustomize
-          sudo mv ./kustomize /usr/local/bin
-
       - name: Setup Go
         uses: actions/setup-go@v2
         with:
