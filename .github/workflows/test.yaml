@@ -1,0 +1,37 @@
+name: Test
+
+on: push
+
+jobs:
+  run-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch ${{ github.ref }}
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.deployment.ref }}
+
+      - name: Setup Kustomize
+        run: |
+          curl -o kustomize --location https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv3.8.2/kustomize_v3.8.2_linux_amd64
+          chmod u+x ./kustomize
+          sudo mv ./kustomize /usr/local/bin
+
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ^1.13
+
+      - name: Find git
+        run: |
+          echo "Path env var: $PATH"
+          echo "whereis command result:"
+          whereis git
+          echo "Git version"
+          git --version
+
+      - name: Run Go script test
+        run: go run test.go
+
+      - name: Run kustomize build
+        run: kustomize build ./k8s
