@@ -27,5 +27,17 @@ jobs:
       - name: Run Go script test
         run: go run test.go
 
+      - name: Installed Kustomize version
+        run: |
+          kustomize version
+          whereis kustomize
+
+      - name: Remove existing kustomize and install it again
+        run: |
+          sudo rm /snap/bin/kustomize
+          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+          sudo mv ./kustomize /usr/local/bin
+          whereis kustomize
+
       - name: Run kustomize build
         run: kustomize build ./k8s
