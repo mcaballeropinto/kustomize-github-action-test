@@ -4,4 +4,4 @@ images:
   - name: container-image
     newName: node:latest
 resources:
-  - git@github.com:mcaballeropinto/kustomize-github-action-test//remote-k8s
+  - https://github.com/mcaballeropinto/kustomize-github-action-test.git/remote-k8s
